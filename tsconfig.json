@@ -8,11 +8,13 @@
     "strict": true,
     "sourceMap": true,
     "moduleResolution": "node16",
+    "isolatedModules": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "allowJs": true,
     "types": ["node", "jest"],
+    "skipLibCheck": true,
     "rootDir": ".",
     "outDir": ".erb/dll"
   },
