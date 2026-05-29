@@ -30,6 +30,7 @@ if (!global.TextEncoder) {
   global.TextEncoder = TextEncoder;
 }
 if (!global.TextDecoder) {
-  // @ts-ignore
-  global.TextDecoder = TextDecoder;
+  (
+    global as typeof globalThis & { TextDecoder: typeof TextDecoder }
+  ).TextDecoder = TextDecoder;
 }
