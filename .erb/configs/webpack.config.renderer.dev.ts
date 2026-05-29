@@ -3,7 +3,6 @@ import path from 'path';
 import fs from 'fs';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import chalk from 'chalk';
 import { merge } from 'webpack-merge';
 import { execSync, spawn } from 'child_process';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
@@ -22,6 +21,8 @@ const manifest = path.resolve(webpackPaths.dllPath, 'renderer.json');
 const skipDLLs =
   module.parent?.filename.includes('webpack.config.renderer.dev.dll') ||
   module.parent?.filename.includes('webpack.config.eslint');
+const yellowMessage = (message: string) =>
+  `\u001b[43m\u001b[30m\u001b[1m${message}\u001b[22m\u001b[39m\u001b[49m`;
 
 /**
  * Warn if the DLL is not built
@@ -31,7 +32,7 @@ if (
   !(fs.existsSync(webpackPaths.dllPath) && fs.existsSync(manifest))
 ) {
   console.log(
-    chalk.black.bgYellow.bold(
+    yellowMessage(
       'The DLL files are missing. Sit back while we build them for you with "npm run build-dll"',
     ),
   );
@@ -152,6 +153,7 @@ const configuration: webpack.Configuration = {
     new HtmlWebpackPlugin({
       filename: path.join('index.html'),
       template: path.join(webpackPaths.srcRendererPath, 'index.ejs'),
+      favicon: path.join(webpackPaths.rootPath, 'assets', 'icon.ico'),
       minify: {
         collapseWhitespace: true,
         removeAttributeQuotes: true,

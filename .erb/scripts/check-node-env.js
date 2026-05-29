@@ -1,4 +1,5 @@
-import chalk from 'chalk';
+const redMessage = (message) =>
+  `\u001b[97m\u001b[41m\u001b[1m${message}\u001b[0m`;
 
 export default function checkNodeEnv(expectedEnv) {
   if (!expectedEnv) {
@@ -7,7 +8,7 @@ export default function checkNodeEnv(expectedEnv) {
 
   if (process.env.NODE_ENV !== expectedEnv) {
     console.log(
-      chalk.whiteBright.bgRed.bold(
+      redMessage(
         `"process.env.NODE_ENV" must be "${expectedEnv}" to use this webpack config`,
       ),
     );

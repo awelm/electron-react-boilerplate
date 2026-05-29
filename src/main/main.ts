@@ -38,9 +38,12 @@ if (process.env.NODE_ENV === 'production') {
 
 const isDebug =
   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
+const shouldInstallExtensions =
+  process.env.INSTALL_EXTENSIONS === 'true' ||
+  process.env.UPGRADE_EXTENSIONS === 'true';
 
 if (isDebug) {
-  require('electron-debug').default();
+  require('electron-debug').default({ showDevTools: false });
 }
 
 const installExtensions = async () => {
@@ -57,7 +60,7 @@ const installExtensions = async () => {
 };
 
 const createWindow = async () => {
-  if (isDebug) {
+  if (isDebug && shouldInstallExtensions) {
     await installExtensions();
   }
 
